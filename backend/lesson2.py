@@ -147,8 +147,8 @@ print(total_amount)
 
 # Добавить сумму транзакции, если add = True и среди продуктов есть "Хлеб"
 # Должно выйти 172
-transactions_homework = {
-    "1":{
+transactions_homework = [
+    {
         "add":True,
         "amount":69,
         "products":[
@@ -157,14 +157,14 @@ transactions_homework = {
             "Сок",
         ]
     },
-    "2":{
+    {
         "add":True,
         "amount":30,
         "products":[
             "Сок",
         ]
     },
-    "3":{
+    {
         "add":True,
         "amount":94,
         "products":[
@@ -173,7 +173,7 @@ transactions_homework = {
             "Масло",
         ]
     },
-    "4":{
+    {
         "add":False,
         "amount":24,
         "products":[
@@ -181,7 +181,7 @@ transactions_homework = {
             "Хлеб",
         ]
     },
-    "5":{
+    {
         "add":True,
         "amount":9,
         "products":[
@@ -190,7 +190,7 @@ transactions_homework = {
             "Гречка",
         ]
     },
-    "6":{
+    {
         "add":True,
         "amount":91,
         "products":[
@@ -198,7 +198,7 @@ transactions_homework = {
             "Гречка",
         ]
     },
-    "7":{
+    {
         "add":True,
         "amount":84,
         "products":[
@@ -206,7 +206,7 @@ transactions_homework = {
             "Сок",
         ]
     },
-    "8":{
+    {
         "add":False,
         "amount":45,
         "products":[
@@ -214,7 +214,7 @@ transactions_homework = {
             "Гречка",
         ]
     },
-    "9":{
+    {
         "add":True,
         "amount":9,
         "products":[
@@ -222,11 +222,11 @@ transactions_homework = {
             "Сок",
         ]
     },
-}
+]
 
 trans_sum=0
 
-for transaction in transactions_homework.values():
+for transaction in transactions_homework:
     if transaction['add'] and "Хлеб" in transaction["products"]:
         trans_sum += transaction["amount"]
 print(trans_sum)
