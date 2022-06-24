@@ -29,10 +29,10 @@ class Student(models.Model):
                             null=True)
 
     surname = models.CharField(verbose_name="Surname",
-                            max_length=100,
-                            blank=True,
-                            null=True,
-                            choices=SURNAME_CHOICES)
+                                max_length=100,
+                                blank=True,
+                                null=True,
+                                choices=SURNAME_CHOICES)
 
     birthday = models.DateField(verbose_name="Birthday",
                                 blank=True,
