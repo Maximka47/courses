@@ -41,6 +41,7 @@ class Student(models.Model):
     group = models.ForeignKey(StudentGroup, verbose_name="Group",   #OneToOneField(one student in one group) ManyToManyField(many students and each of them can be in many groups)
                                             on_delete=models.SET_NULL,
                                             null=True,
+                                            related_name = "students",
                                             blank=True)
     # group_id = models.IntegerField()
     def __str__(self):
