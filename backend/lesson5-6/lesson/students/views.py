@@ -65,9 +65,8 @@ class ViewSubjects(View):
 
 class ViewSubject(View):
     def get(self, request):
-
         try:
-            subject = Subject.objects.get(id=id)
+            subject = Subject.objects.all()
             subjects_data = {
                 'name':subject.name
         }
@@ -79,15 +78,13 @@ class ViewSubject(View):
 
 class ViewSubjectStudents(View):
     def get(self, request, id):
-        subject_groups = request.GET.get(id)
-        subject_groups = StudentGroup.objects.filter(subject_id=id)
-        groups_data = []
-        students_data = []
-        for subject_group in subject_groups:
-            groups_data.append(subject_group)
-            students = Student.objects.filter(group=subject_group)
-            for student in students:
-                students_data.append(student)
-            
+            subject_groups = request.GET.get(id)
+            subject_groups = StudentGroup.objects.filter(subject_id=id)
+            students_data = []
+            for subject_group in subject_groups:
+                students = Student.objects.filter(group=subject_group)
+                for student in students:
+                    students_data.append(student)
+                    
+            return HttpResponse(students_data)
 
-        return HttpResponse(students_data)
