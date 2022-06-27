@@ -78,13 +78,15 @@ class ViewSubject(View):
 
 class ViewSubjectStudents(View):
     def get(self, request, id):
-            subject_groups = request.GET.get(id)
-            subject_groups = StudentGroup.objects.filter(subject_id=id)
             students_data = []
-            for subject_group in subject_groups:
-                students = Student.objects.filter(group=subject_group)
-                for student in students:
-                    students_data.append(student)
-                    
-            return HttpResponse(students_data)
+            try:
+                subject = Subject.objects.get(id=id)
+                groups = subject.groups.all()
+                for group in groups:
+                    students = group.students.all()
+                    for student in students:
+                        students_data.append({'name':student.name})
+            except Subject.DoesNotExist:
+                students_data.append({"Subject with such ID does not exist"})
+            return JsonResponse({'data':students_data})
 
