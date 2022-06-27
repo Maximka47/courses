@@ -1,7 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.views import View
-from students.models import Student
+from students.models import Student, StudentGroup, Subject
 
 # old method
 def my_view(request):
@@ -41,5 +41,53 @@ class MyView(View):
         }
         except Student.DoesNotExist:
             student = None
+
         students_data={}
         return JsonResponse({'data':students_data})
+
+class ViewSubjects(View):
+    def get(self, request):
+        name = request.GET.get('name', '')
+
+        subjects = Subject.objects.all()
+        if name:
+            subjects = Subject.objects.filter(name=name)
+        subjects_data = []
+        for subject in subjects:
+            subjects_data.append({
+                'name':subject.name
+            })
+        return JsonResponse({'data':subjects_data})
+    
+    def post(self, request):
+        name = request.POST.get('name', '')
+        return HttpResponse(name)
+
+class ViewSubject(View):
+    def get(self, request):
+
+        try:
+            subject = Subject.objects.get(id=id)
+            subjects_data = {
+                'name':subject.name
+        }
+        except Subject.DoesNotExist:
+            subject = None
+
+        subjects_data={}
+        return JsonResponse({'data':subjects_data})
+
+class ViewSubjectStudents(View):
+    def get(self, request, id):
+        subject_groups = request.GET.get(id)
+        subject_groups = StudentGroup.objects.filter(subject_id=id)
+        groups_data = []
+        students_data = []
+        for subject_group in subject_groups:
+            groups_data.append(subject_group)
+            students = Student.objects.filter(group=subject_group)
+            for student in students:
+                students_data.append(student)
+            
+
+        return HttpResponse(students_data)
